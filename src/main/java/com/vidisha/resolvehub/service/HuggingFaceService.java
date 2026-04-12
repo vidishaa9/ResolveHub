@@ -33,7 +33,7 @@ public class HuggingFaceService {
         try {
             String prompt = """
                     Classify the complaint into:
-                    Category: Billing, Network, Service, Other
+                    Category: Billing, Network, Service, Technical,Account,Delivery,Security,Feedback,other
                     Priority: Low, Medium, High
 
                     Return ONLY in this format:
