@@ -1,59 +1,42 @@
-🚀 ResolveHub – AI Smart Complaint Management System
+🚀 ResolveHub
+AI-Powered Complaint Management System
 
-ResolveHub is a Spring Boot REST API that allows users to submit complaints and automatically classifies them using AI-based intelligence with a rule-based fallback system for reliability.
+ResolveHub is a Spring Boot REST API that automatically classifies user complaints using AI with a rule-based fallback system, ensuring reliable and intelligent categorization.
 
-📌 Features
+✨ Features
 📝 Submit complaints via REST API
-🤖 AI-based complaint classification
-🧠 Hybrid system (AI + rule-based fallback)
-📊 Categorization into real-world domains
+🤖 AI-based automatic classification
+🧠 Rule-based fallback (100% reliability)
 ⚡ Priority detection (Low / Medium / High)
-🗄️ PostgreSQL database integration
-🔍 Retrieve all complaints
+🗄️ PostgreSQL integration
 🔄 Update complaint status
-🧠 AI Classification
-
-Complaints are classified into:
+📊 View all complaints
+🧠 Categories
 
 Network
-Billing
-Technical
-Service
-Account
-Delivery
-Security
-Feedback
-Other
-🔥 Hybrid Approach
+• Billing 
+• Technical 
+• Service
+• Account
+• Delivery 
+• Security 
+• Feedback 
+• Other
 
-If AI service fails or is unavailable:
+🛠 Tech Stack
 
-➡️ The system automatically switches to rule-based classification
-➡️ Ensures 100% system reliability
+Java 17 
+• Spring Boot
+• Spring Data JPA 
+• PostgreSQL 
+• REST API 
+• Hugging Face API
+• Lombok
 
-🛠️ Tech Stack
-Java 17
-Spring Boot
-Spring Data JPA
-PostgreSQL
-REST APIs
-Hugging Face API
-Lombok
-⚙️ Project Structure
-src/main/java/com/vidisha/resolvehub
-│
-├── controller   # REST Controllers
-├── service      # Business Logic (AI + fallback)
-├── repository   # Database layer
-├── model        # Entity classes
-├── dto          # Request/Response DTOs
-├── exception    # Custom exceptions
-🔑 API Endpoints
+📡 API Endpoints
 ➤ Create Complaint
 
 POST /api/complaints
-
-Request:
 
 {
   "description": "My internet is not working"
@@ -70,43 +53,33 @@ Response:
 
 GET /api/complaints
 
-➤ Update Complaint Status
+➤ Update Status
 
 PUT /api/complaints/{id}?status=RESOLVED
 
-🗄️ Database Configuration
+⚙️ Setup
+1. Clone
+git clone https://github.com/your-username/resolvehub.git
+2. Configure DB
 spring.datasource.url=jdbc:postgresql://localhost:5432/Complaints
 spring.datasource.username=postgres
 spring.datasource.password=YOUR_PASSWORD
-
 spring.jpa.hibernate.ddl-auto=update
-🤖 AI Configuration
+3. Add AI Key
 huggingface.api.key=YOUR_API_KEY
-🚀 How to Run
+4. Run Project
+mvn spring-boot:run
+💡 Highlights
 
-Clone repository
-
-git clone https://github.com/your-username/resolvehub.git
-Open in IntelliJ / Eclipse
-Configure PostgreSQL + API key
-Run the application
-Test APIs using Postman
-💡 Key Highlights
-AI-powered backend system
-Production-level fallback strategy
-Clean architecture (Controller → Service → Repository)
-Exception handling with custom errors
-Resume-ready project
-🎯 Future Enhancements
-📧 Email notifications
-📊 Admin dashboard
-🔐 Authentication & Authorization
-📈 Complaint analytics
-🤖 AI auto-replies
+✔ AI + fallback hybrid system
+✔ Clean layered architecture
+✔ Production-ready design
+✔ Easy to extend
 
 👩‍💻 Author
+
 Vidisha
 
-⭐ Support
-If you like this project, give it a ⭐ on GitHub!
-If you like this project, give it a ⭐ on GitHub!
+⭐ If you like this project
+
+Give it a star ⭐
