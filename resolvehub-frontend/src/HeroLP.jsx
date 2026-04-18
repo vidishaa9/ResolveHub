@@ -1,9 +1,12 @@
 import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router";
 
 export default function HeroLP() {
+
+    let navigate=useNavigate();
     let handleClick=()=>
     {
-        console.log("Yaay");
+        navigate("/registercomplaint");
     }
   return (
     <Box

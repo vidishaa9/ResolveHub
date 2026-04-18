@@ -7,7 +7,10 @@ export default function Navbar() {
     {
        navigate("/admin");
     }
-    
+    let handleClickHome=()=>
+    {
+      navigate("/");
+    }
   return (
     <AppBar
       position="static"
@@ -21,8 +24,10 @@ export default function Navbar() {
           variant="h6"
           sx={{
             fontWeight: "bold",
-            color: "white"
+            color: "white",
+            cursor: "pointer"
           }}
+          onClick={handleClickHome}
         >
           ResolveHub
         </Typography>

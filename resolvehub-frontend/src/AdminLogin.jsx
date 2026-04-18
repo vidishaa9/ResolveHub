@@ -1,26 +1,20 @@
-import {
-  Box,
-  Typography,
-  TextField,
-  Button,
-  Paper
-} from "@mui/material";
+import {Box,Typography,TextField,Button,Paper} from "@mui/material";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const navigate=useNavigate();
   const handleLogin = () => {
-    console.log("Login clicked", email, password);
-    // later → connect backend
+    navigate("/admindashboard");
   };
 
   return (
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundColor: "#0F172A",
+        backgroundColor: "#EEF3FB",
         display: "flex",
         justifyContent: "center",
         alignItems: "center"
@@ -33,7 +27,7 @@ export default function AdminLogin() {
           padding: "30px",
           width: "350px",
           borderRadius: "12px",
-          backgroundColor:"#EEF3FB"
+          backgroundColor:"white"
         }}
       >
 
