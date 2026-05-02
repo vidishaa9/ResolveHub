@@ -1,12 +1,14 @@
-import {Box,Typography,TextField,Button,Paper} from "@mui/material";
+import { Box, Typography, TextField, Button, Paper } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
 export default function ComplaintForm() {
+  const navigate = useNavigate();
 
-const navigate=useNavigate();
   const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
     description: ""
   });
 
@@ -20,9 +22,6 @@ const navigate=useNavigate();
     });
   };
 
-
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,16 +29,10 @@ const navigate=useNavigate();
     navigate("/");
 
     try {
-      await axios.post(
-        "http://localhost:8081/api/complaints",
-        formData
-      );
-
+      await axios.post("http://localhost:8081/api/complaints", formData);
       setMessage("Complaint submitted successfully!");
-      setFormData({ description: "" });
-
+      setFormData({ name: "", phone: "", description: "" });
     } catch (error) {
-      console.error(error);
       setMessage("Error submitting complaint");
     } finally {
       setLoading(false);
@@ -50,32 +43,60 @@ const navigate=useNavigate();
     <Box
       sx={{
         minHeight: "100vh",
-        backgroundColor: "#EEF3FB",
         display: "flex",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        position: "relative",
+        overflow: "hidden",
+
+       
+        background: `
+          radial-gradient(ellipse at 70% 80%, rgba(99,102,241,0.25) 0%, transparent 55%),
+          radial-gradient(ellipse at 30% 20%, rgba(191,219,254,0.7) 0%, transparent 60%),
+          linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%)
+        `
       }}
     >
-      <Paper
-        elevation={3}
+
+   
+      <Box
         sx={{
-          padding: "30px",
-          width: "400px",
-          borderRadius: "12px",
-          backgroundColor: "white"
+          position: "absolute",
+          top: "-120px",
+          left: "-120px",
+          width: "300px",
+          height: "300px",
+          background: "radial-gradient(circle, #bfdbfe, transparent)",
+          borderRadius: "50%",
+          opacity: 0.5
+        }}
+      />
+
+     
+      <Paper
+        elevation={0}
+        sx={{
+          padding: "40px",
+          width: "420px",
+          borderRadius: "20px",
+          background: "rgba(255,255,255,0.95)",
+          backdropFilter: "blur(12px)",
+          border: "1px solid rgba(255,255,255,0.6)",
+          boxShadow: "0 30px 60px rgba(0,0,0,0.08)",
+          zIndex: 2
         }}
       >
-        {/* Title */}
+    
         <Typography
           variant="h5"
           fontWeight="bold"
           textAlign="center"
-          sx={{color:"#0F172A"}}
+          sx={{ color: "#0F172A" }}
         >
           Register Complaint
         </Typography>
 
-        {/* Form */}
+        
         <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
 
           <TextField
@@ -86,7 +107,8 @@ const navigate=useNavigate();
             value={formData.name}
             onChange={handleChange}
             required
-                />
+            sx={{ "& .MuiOutlinedInput-root": { borderRadius: "10px" } }}
+          />
 
           <TextField
             label="Contact Number"
@@ -96,51 +118,37 @@ const navigate=useNavigate();
             value={formData.phone}
             onChange={handleChange}
             required
-           
+            sx={{ "& .MuiOutlinedInput-root": { borderRadius: "10px" } }}
           />
 
-       <TextField
-        label="Complaint Description"
-        name="description"
-        fullWidth
-        multiline
-        rows={4}
-        margin="normal"
-        value={formData.description}
-        onChange={handleChange}
-        required
-  sx={{
-    "& .MuiInputLabel-root": {
-      color: "#0F172A", // label color
-    },
-    "& .MuiOutlinedInput-root": {
-      color: "#0F172A", // input text
-      "& fieldset": {
-        borderColor: "white", // default border
-      },
-      "&:hover fieldset": {
-        borderColor: "#0F172A", // hover border
-      },
-      "&.Mui-focused fieldset": {
-        borderColor: "#0F172A", // focused border
-      },
-    },
-  }}
-/>
+          <TextField
+            label="Complaint Description"
+            name="description"
+            multiline
+            rows={4}
+            fullWidth
+            margin="normal"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            sx={{ "& .MuiOutlinedInput-root": { borderRadius: "10px" } }}
+          />
 
           <Button
             type="submit"
-            variant="contained"
             fullWidth
             sx={{
-              mt: 2,
-              py: 1.2,
-              backgroundColor: "#0F172A",
+              mt: 3,
+              py: 1.4,
+              borderRadius: "12px",
               textTransform: "none",
-              borderRadius: "8px",
-              color:"white",
+              fontWeight: "600",
+              background: "linear-gradient(135deg, #2563EB, #1D4ED8)",
+              color: "white",
+              boxShadow: "0 15px 30px rgba(37,99,235,0.3)",
               "&:hover": {
-                backgroundColor: "#EEF3FB"
+                transform: "translateY(-2px)",
+                boxShadow: "0 20px 40px rgba(37,99,235,0.4)"
               }
             }}
             disabled={loading}
@@ -156,7 +164,6 @@ const navigate=useNavigate();
               {message}
             </Typography>
           )}
-
         </Box>
       </Paper>
     </Box>

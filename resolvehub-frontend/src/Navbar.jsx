@@ -1,49 +1,35 @@
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router";
-export default function Navbar() {
 
-    const navigate=useNavigate();
-    let handleClick=()=>
-    {
-       navigate("/admin");
-    }
-    let handleClickHome=()=>
-    {
-      navigate("/");
-    }
+export default function Navbar() {
+  const navigate = useNavigate();
+
   return (
     <AppBar
       position="static"
       sx={{
-        backgroundColor: "#0F172A",
-        borderBottom: "1px solid #E6EAF0"
+        background: "rgba(15,23,42,0.9)",
+        backdropFilter: "blur(10px)",
+        boxShadow: "none"
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+        
         <Typography
-          variant="h6"
-          sx={{
-            fontWeight: "bold",
-            color: "white",
-            cursor: "pointer"
-          }}
-          onClick={handleClickHome}
+          sx={{ fontWeight: "bold", cursor: "pointer" }}
+          onClick={() => navigate("/")}
         >
-          ResolveHub
+          Resolve<span style={{ color: "#3B82F6" }}>Hub</span>
         </Typography>
 
         <Button
-          variant="outlined"
+          onClick={() => navigate("/admin")}
           sx={{
-            borderColor: "beige",
-            color: "beige",
-            borderRadius: "8px",
-            "&:hover": {
-              backgroundColor: "rgba(37,99,235,0.08)",
-              borderColor: "#2563EB"
-            }
+            border: "1px solid rgba(255,255,255,0.4)",
+            color: "white",
+            borderRadius: "10px",
+            textTransform: "none"
           }}
-          onClick={handleClick}
         >
           Admin Login
         </Button>
