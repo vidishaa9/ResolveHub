@@ -1,4 +1,4 @@
-package com.vidisha.resolvehub.DTo;
+package com.vidisha.resolvehub.dto;
 
 
 import lombok.Builder;

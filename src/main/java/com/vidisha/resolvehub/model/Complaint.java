@@ -1,40 +1,32 @@
 package com.vidisha.resolvehub.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Complaint {
-   //creating a database
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-
-//   The raw complaint text submitted by the user.
-//  @Column(nullable = false) enforces a NOT NULL constraint in the DB.
-//  columnDefinition = "TEXT" allows long descriptions (vs VARCHAR limit).
-
- @Column(nullable = false, columnDefinition = "TEXT")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    private String category;//AI-generated
-    private String priority;//AI-generated
+    private String category;
+    private String priority;
+    private String status;
 
-    private String status;//Open,In-progress,Closed
-    private LocalDateTime createdAt;//sorting complaints or tracking history
-
-
-
+    private LocalDateTime createdAt;
 }
