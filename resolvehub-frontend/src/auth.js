@@ -9,7 +9,7 @@ export const getRole = () => {
   if (!token) return null;
 
   const decoded = jwtDecode(token);
-  return decoded.role; // from backend claim
+  return decoded.role; 
 };
 
 export const logout = () => {

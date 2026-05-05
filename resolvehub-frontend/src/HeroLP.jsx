@@ -23,7 +23,7 @@ export default function HeroLP() {
   }}
 >
 
-      {/* LEFT DOT PATTERN */}
+ 
       <Box
         sx={{
           position: "absolute",
@@ -38,7 +38,7 @@ export default function HeroLP() {
         }}
       />
 
-      {/* RIGHT SOFT BLOB */}
+      
       <Box
         sx={{
           position: "absolute",
@@ -52,7 +52,7 @@ export default function HeroLP() {
         }}
       />
 
-      {/* CARD */}
+     
       <Box
         sx={{
           background: "rgba(255,255,255,0.95)",
@@ -69,7 +69,7 @@ export default function HeroLP() {
         }}
       >
 
-        {/* ICON */}
+        
         <Box
           sx={{
             width: "70px",
@@ -86,7 +86,7 @@ export default function HeroLP() {
           ⚡
         </Box>
 
-        {/* HEADING */}
+        
         <Typography
           sx={{
             fontSize: "34px",
@@ -100,7 +100,7 @@ export default function HeroLP() {
           We’ll help you get it resolved.
         </Typography>
 
-        {/* SUBTEXT */}
+        
         <Typography
           sx={{
             mt: 2,
@@ -114,7 +114,6 @@ export default function HeroLP() {
           Every issue gets proper attention and a clear resolution timeline.
         </Typography>
 
-        {/* BUTTON */}
         <Button
           sx={{
             mt: 4,
@@ -137,7 +136,7 @@ export default function HeroLP() {
            Register a Complaint
         </Button>
 
-        {/* FEATURES */}
+      
         <Box
           sx={{
             display: "flex",
@@ -168,3 +167,6 @@ export default function HeroLP() {
     </Box>
   );
 }
+
+
+

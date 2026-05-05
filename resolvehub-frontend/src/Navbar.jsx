@@ -7,7 +7,7 @@ import {
   MenuItem
 } from "@mui/material";
 
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { isLoggedIn, getRole, logout } from "./auth";
 
@@ -41,19 +41,17 @@ export default function Navbar() {
   
   useEffect(() => {
     const syncAuth = () => {
-      console.log("syncAuth running");
+      ;
       setLoggedIn(isLoggedIn());
       setRole(getRole());
 
-      console.log("loggedIn:", isLoggedIn());
-      console.log("role:", getRole());
     };
 
-    // listens for login/logout in same or other tabs
+    
     window.addEventListener("storage", syncAuth);
     window.addEventListener("authChange", syncAuth);
 
-    // also run once on mount
+    
     syncAuth();
 
     return () => {
@@ -63,7 +61,7 @@ export default function Navbar() {
   }, []);
 
   window.addEventListener("authChange", () => {
-  console.log("🔥 authChange event fired");
+  
 });
 
   return (
@@ -77,7 +75,7 @@ export default function Navbar() {
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
 
-        {/* LOGO */}
+        
         <Typography
           sx={{ fontWeight: "bold", cursor: "pointer" }}
           onClick={() => navigate("/")}
@@ -85,10 +83,10 @@ export default function Navbar() {
           Resolve<span style={{ color: "#3B82F6" }}>Hub</span>
         </Typography>
 
-        {/* RIGHT SIDE */}
+       
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
 
-          {/* NOT LOGGED IN */}
+         
           {!loggedIn && (
             <>
               <Button
@@ -125,7 +123,7 @@ export default function Navbar() {
             </>
           )}
 
-          {/* USER */}
+         
           {loggedIn && role === "ROLE_USER" && (
             <>
               <Button
@@ -149,7 +147,7 @@ export default function Navbar() {
             </>
           )}
 
-          {/* ADMIN */}
+         
           {loggedIn && role === "ROLE_ADMIN" && (
             <>
               <Button

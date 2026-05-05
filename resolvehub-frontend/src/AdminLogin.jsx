@@ -43,10 +43,9 @@ export default function AdminLogin() {
         throw new Error("Token missing from response");
       }
 
-      // store token
+      
       localStorage.setItem("token", token);
 
-      // decode role from JWT
       let role = null;
       try {
         const payload = JSON.parse(atob(token.split(".")[1]));
@@ -55,15 +54,14 @@ export default function AdminLogin() {
         console.log("JWT decode failed:", e);
       }
 
-      // fallback safety
+      
       if (!role) role = "ROLE_USER";
 
       localStorage.setItem("role", role);
 
-      // trigger navbar update
       window.dispatchEvent(new Event("authChange"));
 
-      // redirect based on role
+      
       if (role === "ROLE_ADMIN") {
         navigate("/admindashboard");
       } else {
@@ -130,7 +128,7 @@ export default function AdminLogin() {
           </Typography>
         </Box>
 
-        {/* USERNAME FIELD (UI unchanged, only logic changed) */}
+       
         <TextField
           label="Username"
           fullWidth
