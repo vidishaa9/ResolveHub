@@ -26,12 +26,21 @@ export default function ComplaintForm() {
     e.preventDefault();
     setLoading(true);
     setMessage("");
-    navigate("/");
-
+    
+    const token = localStorage.getItem("token");
     try {
-      await axios.post("http://localhost:8081/api/complaints", formData);
+      await axios.post(
+
+  "http://localhost:8081/api/complaints",
+  formData,
+  {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }}
+);
       setMessage("Complaint submitted successfully!");
       setFormData({ name: "", phone: "", description: "" });
+      navigate("/");
     } catch (error) {
       setMessage("Error submitting complaint");
     } finally {
@@ -169,3 +178,8 @@ export default function ComplaintForm() {
     </Box>
   );
 }
+
+
+
+
+

@@ -8,41 +8,70 @@ import {
   Alert
 } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
 
- 
-  const [email, setEmail] = useState("");
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
-  const handleLogin = () => {
-    if (!email || !password) {
+  const handleLogin = async () => {
+    if (!username || !password) {
       setErrorMsg("Please fill all fields");
       setError(true);
       return;
     }
 
-   
-    if (!emailRegex.test(email)) {
-      setErrorMsg("Invalid email format");
-      setError(true);
-      return;
-    }
+    try {
+      const res = await axios.post(
+        "http://localhost:8081/api/auth/login",
+        {
+          username: username,
+          password: password
+        }
+      );
 
-    
-    if (email === "chhabragunik21@gmail.com" && password === "12345") {
-      navigate("/admindashboard");
-    } else {
-      setErrorMsg("Wrong email or password");
+      const token = res.data.token;
+
+      if (!token) {
+        throw new Error("Token missing from response");
+      }
+
+      // store token
+      localStorage.setItem("token", token);
+
+      // decode role from JWT
+      let role = null;
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        role = payload.role;
+      } catch (e) {
+        console.log("JWT decode failed:", e);
+      }
+
+      // fallback safety
+      if (!role) role = "ROLE_USER";
+
+      localStorage.setItem("role", role);
+
+      // trigger navbar update
+      window.dispatchEvent(new Event("authChange"));
+
+      // redirect based on role
+      if (role === "ROLE_ADMIN") {
+        navigate("/admindashboard");
+      } else {
+        navigate("/");
+      }
+
+    } catch (err) {
+      setErrorMsg("Invalid credentials");
       setError(true);
       setPassword("");
     }
@@ -64,8 +93,6 @@ export default function AdminLogin() {
         `
       }}
     >
-
-
       <Box
         sx={{
           position: "absolute",
@@ -80,7 +107,6 @@ export default function AdminLogin() {
         }}
       />
 
-     
       <Paper
         elevation={0}
         sx={{
@@ -98,26 +124,19 @@ export default function AdminLogin() {
           zIndex: 2
         }}
       >
-       
         <Box textAlign="center" mb={3}>
           <Typography variant="h5" fontWeight="700" color="#0F172A">
             Admin Login
           </Typography>
         </Box>
 
-       
+        {/* USERNAME FIELD (UI unchanged, only logic changed) */}
         <TextField
-          label="Email"
+          label="Username"
           fullWidth
           margin="normal"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          error={email !== "" && !emailRegex.test(email)}
-          helperText={
-            email !== "" && !emailRegex.test(email)
-              ? "Enter a valid email"
-              : ""
-          }
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           sx={{
             "& .MuiOutlinedInput-root": {
               borderRadius: "12px"
@@ -125,7 +144,6 @@ export default function AdminLogin() {
           }}
         />
 
-     
         <TextField
           label="Password"
           type="password"
@@ -140,7 +158,6 @@ export default function AdminLogin() {
           }}
         />
 
-       
         <Button
           fullWidth
           onClick={handleLogin}
@@ -163,7 +180,6 @@ export default function AdminLogin() {
           Login
         </Button>
 
-     
         <Snackbar
           open={error}
           autoHideDuration={3000}

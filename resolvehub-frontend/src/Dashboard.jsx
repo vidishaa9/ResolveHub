@@ -1,7 +1,8 @@
 import {
   Box, Paper, Typography, Button,
   Table, TableHead, TableRow,
-  TableCell, TableBody, Chip
+  TableCell, TableBody, Chip,
+  Select, MenuItem
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,16 +10,46 @@ import axios from "axios";
 export default function AdminDashboard() {
   const [complaints, setComplaints] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [updatingId, setUpdatingId] = useState(null);
+  const [newStatus, setNewStatus] = useState("");
 
   const fetchComplaints = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:8081/api/complaints");
+      const token = localStorage.getItem("token");
+
+      const res = await axios.get("http://localhost:8081/api/complaints", {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       setComplaints(res.data);
     } catch (err) {
       console.log(err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const updateStatus = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.put(
+        `http://localhost:8081/api/complaints/${id}/status`,
+        null,
+        {
+          params: { status: newStatus },
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+
+      fetchComplaints();
+      setUpdatingId(null);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -34,7 +65,7 @@ export default function AdminDashboard() {
         position: "relative",
         overflow: "hidden",
 
-        // 🔥 SAME GRADIENT SYSTEM
+        
         background: `
           radial-gradient(ellipse at 80% 90%, rgba(99,102,241,0.25), transparent 60%),
           radial-gradient(ellipse at 20% 10%, rgba(191,219,254,0.8), transparent 60%),
@@ -43,7 +74,7 @@ export default function AdminDashboard() {
       }}
     >
 
-      {/* HEADER */}
+   
       <Box
         sx={{
           display: "flex",
@@ -53,7 +84,7 @@ export default function AdminDashboard() {
         }}
       >
         <Box>
-          <Typography variant="h4" fontWeight="700" color="#0F172A">
+          <Typography variant="h4" fontWeight="1000" color="#0F172A">
             Complaints Dashboard
           </Typography>
           <Typography color="#64748B" fontSize="14px">
@@ -113,6 +144,7 @@ export default function AdminDashboard() {
                 <TableCell sx={headStyle}>Category</TableCell>
                 <TableCell sx={headStyle}>Priority</TableCell>
                 <TableCell sx={headStyle}>Status</TableCell>
+                <TableCell sx={headStyle}>Action</TableCell>
               </TableRow>
             </TableHead>
 
@@ -120,7 +152,7 @@ export default function AdminDashboard() {
             <TableBody>
               {complaints.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} align="center">
+                  <TableCell colSpan={6} align="center">
                     No complaints found
                   </TableCell>
                 </TableRow>
@@ -152,11 +184,53 @@ export default function AdminDashboard() {
                     </TableCell>
 
                     <TableCell>
-                      <Chip
-                        label={c.status}
-                        sx={statusStyle(c.status)}
-                        size="small"
-                      />
+                      {updatingId === c.id ? (
+                        <Select
+                          value={newStatus}
+                          size="small"
+                          onChange={(e) => setNewStatus(e.target.value)}
+                        >
+                          <MenuItem value="OPEN">OPEN</MenuItem>
+                          <MenuItem value="IN_PROGRESS">IN_PROGRESS</MenuItem>
+                          <MenuItem value="RESOLVED">RESOLVED</MenuItem>
+                        </Select>
+                      ) : (
+                        <Chip
+                          label={c.status}
+                          sx={statusStyle(c.status)}
+                          size="small"
+                        />
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      {updatingId === c.id ? (
+                        <Button
+                          size="small"
+                          onClick={() => updateStatus(c.id)}
+                          sx={{
+                            background: "#2563EB",
+                            color: "white",
+                            textTransform: "none",
+                            mr: 1
+                          }}
+                        >
+                          Save
+                        </Button>
+                      ) : (
+                        <Button
+                          size="small"
+                          onClick={() => {
+                            setUpdatingId(c.id);
+                            setNewStatus(c.status);
+                          }}
+                          sx={{
+                            textTransform: "none"
+                          }}
+                        >
+                          Update
+                        </Button>
+                      )}
                     </TableCell>
 
                   </TableRow>
@@ -171,13 +245,13 @@ export default function AdminDashboard() {
   );
 }
 
-// 🎨 HEAD STYLE
+
 const headStyle = {
   color: "white",
   fontWeight: "600"
 };
 
-// 🎨 CUSTOM CHIP STYLES (more premium than default MUI colors)
+
 const priorityStyle = (priority) => {
   if (priority === "High")
     return {
@@ -221,3 +295,7 @@ const statusStyle = (status) => {
     fontWeight: "600"
   };
 };
+
+
+
+
