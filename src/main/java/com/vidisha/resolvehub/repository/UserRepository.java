@@ -10,6 +10,10 @@ import java.util.Optional;
  */
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Find user by username (used in login + service layer)
+  
     Optional<User> findByUsername(String username);
 }
+
+
+
+

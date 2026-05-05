@@ -10,9 +10,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 
-/**
- * Hugging Face AI Service (FREE)
- */
+
 @Service
 @RequiredArgsConstructor
 public class HuggingFaceService {
@@ -76,9 +74,8 @@ public class HuggingFaceService {
         }
     }
 
-    /**
-     * Parse AI text response
-     */
+   
+    
     private Map<String, String> parseResponse(String text) {
 
         String category = "Other";
@@ -99,9 +96,7 @@ public class HuggingFaceService {
         );
     }
 
-    /**
-     * Fallback logic if API fails
-     */
+    
     private Map<String, String> fallbackLogic(String description) {
 
         String desc = description.toLowerCase();
@@ -117,3 +112,6 @@ public class HuggingFaceService {
         }
     }
 }
+
+
+

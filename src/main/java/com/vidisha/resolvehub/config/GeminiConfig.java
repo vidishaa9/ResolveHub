@@ -12,3 +12,7 @@ public class GeminiConfig {
         return new RestTemplate();
     }
 }
+
+
+
+

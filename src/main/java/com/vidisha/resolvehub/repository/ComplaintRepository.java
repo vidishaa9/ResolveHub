@@ -12,6 +12,9 @@ public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
     List<Complaint> findByStatus(String status);
     List<Complaint> findByCategory(String category);
 
-    // 🔥 ADD THIS LINE (THIS FIXES YOUR ERROR)
+    
     List<Complaint> findByUserUsername(String username);
 }
+
+
+

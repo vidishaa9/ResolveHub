@@ -7,9 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-/**
- * Loads user from DB for Spring Security
- */
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
@@ -30,3 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .build();
     }
 }
+
+
+
+
