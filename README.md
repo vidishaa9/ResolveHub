@@ -177,6 +177,7 @@ git clone https://github.com/your-username/resolvehub.git
 ## 👩‍💻 Author
 
 **Vidisha**
+---
 **Gunik**
 ---
 
